@@ -43,7 +43,7 @@ public class SimpleRollParserTest {
 
         };
         RollLineValidator rollValidator = line -> line;
-        PlayerFrameValidator frameValidator = line -> true;
+        PlayerFrameValidator frameValidator = line -> line;
         PlayerFramelMapper mapper = line -> Collections.emptyList();
 
         this.parserWithRollValidator = new SimpleRollParser() {

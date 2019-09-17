@@ -46,7 +46,7 @@ public class DefaultPlayerFramelMapper implements PlayerFramelMapper {
         while (index < allRolls.size()) {
             FrameRolls fr = getFrameRoll(index, frameList.size(), allRolls);
 
-            final Frame frame = new FrameImpl(fr);
+            final Frame frame = new FrameImpl(fr, frameList.size());
             frameList.add(frame);
             index += fr.getRollsNumber();
         }
@@ -71,7 +71,7 @@ public class DefaultPlayerFramelMapper implements PlayerFramelMapper {
             IntStream.range(startIndex, end)
                     .forEach(i -> rolls.add(allRolls.get(i)));
         }
-        return  new FrameRollsImpl(rolls);
+        return new FrameRollsImpl(rolls);
     }
 
 }

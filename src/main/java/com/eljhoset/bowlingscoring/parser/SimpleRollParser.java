@@ -30,7 +30,7 @@ public abstract class SimpleRollParser implements RollParser {
                 .collect(Collectors.toList());
 
         return getRollMapper().map(validRolls)
-                .stream().filter(getPlayerFrameValidator()::isValid)
+                .stream().map(getPlayerFrameValidator()::validate)
                 .collect(Collectors.toList());
 
     }

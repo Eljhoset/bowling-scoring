@@ -8,5 +8,5 @@ import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
  */
 public interface PlayerFrameValidator {
 
-    boolean isValid(PlayerFrames frames);
+    PlayerFrames validate(PlayerFrames frames);
 }

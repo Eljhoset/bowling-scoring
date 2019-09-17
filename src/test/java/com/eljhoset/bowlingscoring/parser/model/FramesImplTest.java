@@ -38,6 +38,11 @@ public class FramesImplTest {
                 return false;
             }
 
+            @Override
+            public Integer getNumber() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
         };
         for (int i = 0; i < 10; i++) {
             tenFrames.add(frame);

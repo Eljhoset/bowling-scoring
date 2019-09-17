@@ -26,7 +26,7 @@ public class FrameImplTest {
                 return new Roll() {
                     @Override
                     public String getPins() {
-                        throw new UnsupportedOperationException("Not supported yet."); 
+                        throw new UnsupportedOperationException("Not supported yet.");
                     }
 
                     @Override
@@ -44,7 +44,7 @@ public class FrameImplTest {
 
             @Override
             public List<Roll> getRolls() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                throw new UnsupportedOperationException("Not supported yet.");
             }
 
         };
@@ -55,7 +55,7 @@ public class FrameImplTest {
                 return new Roll() {
                     @Override
                     public String getPins() {
-                        throw new UnsupportedOperationException("Not supported yet."); 
+                        throw new UnsupportedOperationException("Not supported yet.");
                     }
 
                     @Override
@@ -68,12 +68,12 @@ public class FrameImplTest {
 
             @Override
             public Integer getRollsNumber() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                throw new UnsupportedOperationException("Not supported yet.");
             }
 
             @Override
             public List<Roll> getRolls() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                throw new UnsupportedOperationException("Not supported yet.");
             }
 
         };
@@ -87,39 +87,44 @@ public class FrameImplTest {
 
     @Test(expected = NullPointerException.class)
     public void instanciate_nullRolls_throwException() {
-        Frame frame = new FrameImpl(null);
+        Frame frame = new FrameImpl(null, null);
     }
 
     @Test(expected = NullPointerException.class)
+    public void instanciate_nullNumber_throwException() {
+        Frame frame = new FrameImpl(strikeFrame, null);
+    }
+
+    @Test
     public void instanciate_validRoll_instanciate() {
-        Frame frame = new FrameImpl(null);
+        Frame frame = new FrameImpl(strikeFrame, 1);
         assertNotNull(frame);
     }
 
     @Test
     public void isStrike_strikeRoll_true() {
-        Frame frame = new FrameImpl(strikeFrame);
+        Frame frame = new FrameImpl(strikeFrame, 1);
         assertTrue(frame.isStrike());
     }
 
     @Test
     public void isStrike_spareRoll_false() {
 
-        Frame frame = new FrameImpl(spareFrame);
+        Frame frame = new FrameImpl(spareFrame, 1);
         assertFalse(frame.isStrike());
     }
 
     @Test
     public void isSpare_strikeRoll_false() {
 
-        Frame frame = new FrameImpl(strikeFrame);
+        Frame frame = new FrameImpl(strikeFrame, 1);
         assertFalse(frame.isSpare());
     }
 
     @Test
     public void isSpare_spareRoll_true() {
 
-        Frame frame = new FrameImpl(spareFrame);
+        Frame frame = new FrameImpl(spareFrame, 1);
         assertTrue(frame.isSpare());
     }
 
