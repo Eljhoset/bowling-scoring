@@ -6,10 +6,16 @@ package com.eljhoset.bowlingscoring.parser.model;
  */
 public interface Frame {
 
+    Integer getNumber();
+
     FrameRolls rolls();
 
     boolean isSpare();
 
     boolean isStrike();
 
+    default boolean isLast() {
+        return false;
+    }
+;
 }
