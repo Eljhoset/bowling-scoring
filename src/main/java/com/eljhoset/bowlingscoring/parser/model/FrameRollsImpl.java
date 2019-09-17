@@ -15,14 +15,9 @@ public class FrameRollsImpl implements FrameRolls {
             throw new IllegalArgumentException("There must be at least one roll");
         }
         if (rolls.size() > 3) {
-            throw new IllegalArgumentException("A frame cannot have more than three rolls");
+            throw new IllegalArgumentException(String.format("A frame cannot have more than three rolls, you have[%d]", rolls.size()));
         }
         this.rolls = rolls;
-    }
-
-    @Override
-    public List<Roll> getRolls() {
-        return Collections.unmodifiableList(rolls);
     }
 
     @Override
@@ -45,6 +40,16 @@ public class FrameRollsImpl implements FrameRolls {
             return Optional.of(rolls.get(index));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Integer getRollsNumber() {
+        return rolls.size();
+    }
+
+    @Override
+    public List<Roll> getRolls() {
+        return Collections.unmodifiableList(rolls);
     }
 
 }

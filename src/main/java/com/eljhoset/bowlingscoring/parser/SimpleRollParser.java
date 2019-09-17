@@ -1,9 +1,9 @@
 package com.eljhoset.bowlingscoring.parser;
 
-import com.eljhoset.bowlingscoring.parser.mapper.RollMapper;
+import com.eljhoset.bowlingscoring.parser.mapper.PlayerFramelMapper;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.validator.PlayerFrameValidator;
-import com.eljhoset.bowlingscoring.parser.validator.RollValidator;
+import com.eljhoset.bowlingscoring.parser.validator.RollLineValidator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,17 +25,19 @@ public abstract class SimpleRollParser implements RollParser {
         Objects.requireNonNull(getPlayerFrameValidator(), "plaver frmae validatormust not be null");
         Objects.requireNonNull(getRollMapper(), "roll mapper must not be null");
 
-        List<PlayerFrames> result = rolls.stream().filter(getRollValidator()::isValid)
-                .map(getRollMapper()::map)
-                .filter(getPlayerFrameValidator()::isValid)
+        List<String> validRolls = rolls.stream()
+                .map(getRollValidator()::validate)
                 .collect(Collectors.toList());
 
-        return result;
+        return getRollMapper().map(validRolls)
+                .stream().filter(getPlayerFrameValidator()::isValid)
+                .collect(Collectors.toList());
+
     }
 
-    public abstract RollMapper getRollMapper();
+    public abstract PlayerFramelMapper getRollMapper();
 
-    public abstract RollValidator getRollValidator();
+    public abstract RollLineValidator getRollValidator();
 
     public abstract PlayerFrameValidator getPlayerFrameValidator();
 }
