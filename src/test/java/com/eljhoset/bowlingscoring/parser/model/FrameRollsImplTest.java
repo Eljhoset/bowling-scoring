@@ -7,6 +7,7 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,10 +25,52 @@ public class FrameRollsImplTest {
 
     @Before
     public void setup() {
-        Roll roll = () -> "10";
-        Roll roll2 = () -> "9";
-        Roll roll3 = () -> "7";
-        Roll roll4 = () -> "6";
+
+        Roll roll = new Roll() {
+            @Override
+            public String getPins() {
+                return "10";
+            }
+
+            @Override
+            public Integer getValue() {
+                throw new UnsupportedOperationException("Not supported yet."); 
+            }
+        };
+        Roll roll2 = new Roll() {
+            @Override
+            public String getPins() {
+                return "9";
+            }
+
+            @Override
+            public Integer getValue() {
+                throw new UnsupportedOperationException("Not supported yet."); 
+            }
+        };
+        Roll roll3 = new Roll() {
+            @Override
+            public String getPins() {
+                return "7";
+            }
+
+            @Override
+            public Integer getValue() {
+                throw new UnsupportedOperationException("Not supported yet."); 
+            }
+        };
+        Roll roll4 = new Roll() {
+            @Override
+            public String getPins() {
+                return "6";
+            }
+
+            @Override
+            public Integer getValue() {
+                throw new UnsupportedOperationException("Not supported yet."); 
+            }
+        };
+
         oneRoll = Arrays.asList(roll);
         twoRolls = Arrays.asList(roll, roll2);
         threeRolls = Arrays.asList(roll, roll2, roll3);
@@ -60,7 +103,7 @@ public class FrameRollsImplTest {
     @Test
     public void instanciate_withValidList_instanciateObject() throws Exception {
         FrameRollsImpl rolls = new FrameRollsImpl(twoRolls);
-
+        assertNotNull(rolls);
     }
 
     @Test

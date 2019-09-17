@@ -12,5 +12,4 @@ public interface Frame {
 
     boolean isStrike();
 
-    int score();
 }

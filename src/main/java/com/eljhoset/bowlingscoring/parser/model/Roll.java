@@ -7,4 +7,6 @@ package com.eljhoset.bowlingscoring.parser.model;
 public interface Roll {
 
     String getPins();
+
+    Integer getValue();
 }

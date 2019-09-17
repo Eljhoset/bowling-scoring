@@ -4,7 +4,7 @@ package com.eljhoset.bowlingscoring.parser.validator;
  *
  * @author jd-jd
  */
-public interface RollValidator {
+public interface RollLineValidator {
 
-    boolean isValid(String line);
+    String validate(String line);
 }

@@ -1,9 +1,9 @@
 package com.eljhoset.bowlingscoring.parser;
 
-import com.eljhoset.bowlingscoring.parser.mapper.RollMapper;
+import com.eljhoset.bowlingscoring.parser.mapper.PlayerFramelMapper;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.validator.PlayerFrameValidator;
-import com.eljhoset.bowlingscoring.parser.validator.RollValidator;
+import com.eljhoset.bowlingscoring.parser.validator.RollLineValidator;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,12 +27,12 @@ public class SimpleRollParserTest {
     public void setup() {
         this.parser = new SimpleRollParser() {
             @Override
-            public RollMapper getRollMapper() {
+            public PlayerFramelMapper getRollMapper() {
                 return null;
             }
 
             @Override
-            public RollValidator getRollValidator() {
+            public RollLineValidator getRollValidator() {
                 return null;
             }
 
@@ -42,18 +42,18 @@ public class SimpleRollParserTest {
             }
 
         };
-        RollValidator rollValidator = line -> true;
+        RollLineValidator rollValidator = line -> line;
         PlayerFrameValidator frameValidator = line -> true;
-        RollMapper mapper = line -> null;
+        PlayerFramelMapper mapper = line -> Collections.emptyList();
 
         this.parserWithRollValidator = new SimpleRollParser() {
             @Override
-            public RollMapper getRollMapper() {
+            public PlayerFramelMapper getRollMapper() {
                 return null;
             }
 
             @Override
-            public RollValidator getRollValidator() {
+            public RollLineValidator getRollValidator() {
                 return rollValidator;
             }
 
@@ -66,12 +66,12 @@ public class SimpleRollParserTest {
 
         this.parserWithValidators = new SimpleRollParser() {
             @Override
-            public RollMapper getRollMapper() {
+            public PlayerFramelMapper getRollMapper() {
                 return null;
             }
 
             @Override
-            public RollValidator getRollValidator() {
+            public RollLineValidator getRollValidator() {
                 return rollValidator;
             }
 
@@ -84,12 +84,12 @@ public class SimpleRollParserTest {
 
         this.parserWithValidatorsAndMappers = new SimpleRollParser() {
             @Override
-            public RollMapper getRollMapper() {
+            public PlayerFramelMapper getRollMapper() {
                 return mapper;
             }
 
             @Override
-            public RollValidator getRollValidator() {
+            public RollLineValidator getRollValidator() {
                 return rollValidator;
             }
 

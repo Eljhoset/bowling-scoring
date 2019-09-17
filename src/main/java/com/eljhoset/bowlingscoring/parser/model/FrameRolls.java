@@ -11,10 +11,16 @@ public interface FrameRolls {
 
     List<Roll> getRolls();
 
+    Integer getRollsNumber();
+
     Roll getFirstRoll();
 
-    Optional<Roll> getSecondRoll();
+    default Optional<Roll> getSecondRoll() {
+        return Optional.empty();
+    }
 
-    Optional<Roll> getThirdRoll();
+    default Optional<Roll> getThirdRoll() {
+        return Optional.empty();
+    }
 
 }
