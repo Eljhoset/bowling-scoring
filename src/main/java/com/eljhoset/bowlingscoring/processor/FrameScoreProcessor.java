@@ -6,11 +6,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Process the game data in order to get the score by frames
  *
  * @author jd-jd
  */
 public interface FrameScoreProcessor {
 
+    /**
+     *
+     * @param frames game information (rolls by frame)
+     * @return
+     */
     PlayerScore process(PlayerFrames frames);
 
     default List<PlayerScore> processAll(List<PlayerFrames> frames) {

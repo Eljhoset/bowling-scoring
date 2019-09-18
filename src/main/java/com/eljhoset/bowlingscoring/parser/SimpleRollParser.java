@@ -10,6 +10,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * Provides a simple implementation of a roll parser, relying on a on a
+ * rollmapper
+ * {@link com.eljhoset.bowlingscoring.parser.mapper.PlayerFramelMapper},
+ * rollvalidator
+ * {@link com.eljhoset.bowlingscoring.parser.validator.RollLineValidator} and
+ * frame validator
+ * {@link com.eljhoset.bowlingscoring.parser.validator.PlayerFrameValidator}
  *
  * @author jd-jd
  */

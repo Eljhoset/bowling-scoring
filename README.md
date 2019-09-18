@@ -1,17 +1,17 @@
-# bowling-scoring
-To build and run the project you need to have Java 8+ and Maven 3.6+ installed in your system. After the build a jar file **bowlingscoring.jar** is generated in the target folder. Also, there are some test files in the src / main / resources folder.
+# Ten-pin bowling-scoring
+To build and run the project you need to have Java 8+ and Maven 3.6+ installed in your system. After the build, a `target` directory is generated for you with a jar file named **bowlingscoring.jar** in it. Additionally, some test files are provided in the `src/main/resources` directory, follow the instructions bellow to run the program.
 
 ``` shell
-# clone the source code, you can also download the .zip file from github
+# Clone the source code or download the .zip file from github.
 git clone https://github.com/Eljhoset/bowling-scoring.git
 
-# Enter the project directory
+# Enter the project directory.
 cd bowling-scoring
 
-# Compile the project
+# Compile the project.
 mvn clean package
 
-# Optianl can compile with integration tests
+# Optionally, you can compile the project with integration tests as follow.
 mvn clean package integration-test
 
 # Use one of the follow command to test with the provided sample files.

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * Provides a abstraction of all the phases of the processing process
  *
  * @author jd-jd
  */

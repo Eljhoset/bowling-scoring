@@ -36,7 +36,8 @@ public class DefaultFrameScoreProcessor implements FrameScoreProcessor {
             int nextIndex = listIterator.nextIndex();
             final Frame frame = listIterator.next();
             final FrameRolls frameRolls = frame.rolls();
-
+            
+            //get nex two rolls, this is important if the frame is strike or spare
             Iterable<Frame> remainingFrameIterable = () -> frames.listIterator(nextIndex);
             List<Roll> nextTwoRolls = StreamSupport.stream(remainingFrameIterable.spliterator(), false)
                     .map(Frame::rolls)

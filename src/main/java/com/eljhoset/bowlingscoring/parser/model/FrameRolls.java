@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Provides a way of handle the frame roll
  *
  * @author jd-jd
  */

@@ -29,7 +29,7 @@ public class App {
         try {
             facade.getScore(filePath, appConsumer);
         } catch (IOException | EmptyFileException ex) {
-            LOG.log(Level.SEVERE, String.format("Error reading source file: %s", ex.getMessage()));
+            LOG.log(Level.SEVERE, String.format("Error reading source file: %s", ex.getMessage()), ex);
         } catch (IllegalArgumentException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());
         }

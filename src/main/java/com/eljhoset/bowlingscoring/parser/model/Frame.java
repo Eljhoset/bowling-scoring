@@ -1,7 +1,7 @@
 package com.eljhoset.bowlingscoring.parser.model;
 
 /**
- *
+ * Provides a representation of a game frame
  * @author jd-jd
  */
 public interface Frame {

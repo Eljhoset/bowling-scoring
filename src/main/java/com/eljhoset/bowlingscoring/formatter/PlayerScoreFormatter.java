@@ -5,6 +5,9 @@ import com.eljhoset.bowlingscoring.processor.model.PlayerScore;
 import java.util.List;
 
 /**
+ * Convert the PlayerScore
+ * {@link com.eljhoset.bowlingscoring.processor.model.PlayerScore} into a
+ * representation ready to be printed
  *
  * @author jd-jd
  */
