@@ -1,5 +1,6 @@
 package com.eljhoset.bowlingscoring.parser.mapper;
 
+import com.eljhoset.bowlingscoring.parser.model.FrameList;
 import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
 import com.eljhoset.bowlingscoring.parser.model.Player;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
@@ -18,7 +19,6 @@ import org.junit.After;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
-import com.eljhoset.bowlingscoring.parser.model.FrameList;
 
 /**
  *
@@ -38,6 +38,8 @@ public class DefaultPlayerFramelMapperTest {
     public void setup() throws Exception {
         this.mapper = new DefaultPlayerFramelMapper();
         this.regularGameOnePlayer = Files.readAllLines(Paths.get(FILE_PATH_REGULAR_GAME));
+        regularGameOnePlayer.add(null);
+        regularGameOnePlayer.add("");
         this.regularGameTwoPlayer = Files.readAllLines(Paths.get(FILE_PATH_REGULAR_GAME_TWO_PLAYERS));
         this.allStrikesGameOnePlayer = Files.readAllLines(Paths.get(FILE_PATH_ALL_STRIKE));
 

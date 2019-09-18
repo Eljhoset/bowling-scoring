@@ -1,7 +1,6 @@
 package com.eljhoset.bowlingscoring.parser.model;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class FrameImpl implements Frame {
 
@@ -24,10 +23,9 @@ public class FrameImpl implements Frame {
 
     @Override
     public boolean isSpare() {
-        Roll firstRoll = rolls.getFirstRoll();
-        Optional<Roll> secondRoll = rolls.getSecondRoll();
-        return 10 - firstRoll.getValue() > 0
-                && firstRoll.getValue() + secondRoll.get().getValue() == 10;
+        Integer pinsKnocked = rolls.getSecondRoll()
+                .map(Roll::getValue).orElse(0) + rolls.getFirstRoll().getValue();
+        return !isStrike() && pinsKnocked == 10;
     }
 
     @Override

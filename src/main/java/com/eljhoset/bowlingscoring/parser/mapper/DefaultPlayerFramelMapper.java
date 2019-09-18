@@ -25,8 +25,7 @@ public class DefaultPlayerFramelMapper implements PlayerFramelMapper {
     public List<PlayerFrames> map(List<String> line) {
         Objects.requireNonNull(line, "line cannot be null.");
         return line.stream()
-                .map(String::trim)
-                .filter(f -> f != null && !f.isEmpty())
+                .filter(f -> f != null && !f.trim().isEmpty())
                 .map(e -> e.split(VALUE_SEPARATOR.get()))
                 .collect(Collectors.groupingBy(e -> e[0], Collectors.mapping(e -> e[1], Collectors.toList())))
                 .entrySet().stream()

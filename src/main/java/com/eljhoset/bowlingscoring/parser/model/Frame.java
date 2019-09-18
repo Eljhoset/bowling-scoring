@@ -17,5 +17,4 @@ public interface Frame {
     default boolean isLast() {
         return false;
     }
-;
 }

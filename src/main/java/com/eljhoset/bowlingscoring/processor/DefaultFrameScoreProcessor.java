@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
-import java.util.function.Function;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -54,17 +54,15 @@ public class DefaultFrameScoreProcessor implements FrameScoreProcessor {
         }
 
         FrameScoreList frameScoreList = new FrameScoreListImpl(frameScores);
-        PlayerScore playerScore = new PlayerScoreImpl(playerFrames.getPlayer(), frameScoreList, score);
-        return playerScore;
+        return new PlayerScoreImpl(playerFrames.getPlayer(), frameScoreList, score);
     }
 
     private FrameScore mapFrameScore(int previous, Frame frame, List<Roll> nextTwoRolls) {
         FrameRolls frameRolls = frame.rolls();
 
-        Function<FrameRolls, Integer> sumPins = (rolls) -> {
-            return rolls.getRolls().stream().mapToInt(Roll::getValue).sum();
-        };
-        int score = sumPins.apply(frameRolls);
+        ToIntFunction<FrameRolls> sumPins = rolls -> rolls.getRolls().stream().mapToInt(Roll::getValue).sum();
+
+        int score = sumPins.applyAsInt(frameRolls);
         score += previous;
 
         int rollBonusCount = 0;
