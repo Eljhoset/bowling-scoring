@@ -108,7 +108,7 @@ public class DefaultFrameScoreProcessorTest {
                 .processAll(regularGameTwoPlayer).stream()
                 .map(PlayerScore::getScore)
                 .collect(Collectors.toList());
-        assertThat(integers, contains(151, 167));
+        assertThat(integers, contains(167, 151));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class DefaultFrameScoreProcessorTest {
                 .map(FrameScore::getScore)
                 .collect(Collectors.toList());
 
-        assertThat(framesPlayerOne, contains(16, 25, 44, 53, 82, 101, 110, 124, 132, 151));
-        assertThat(framesPlayerTwo, contains(20, 39, 48, 66, 74, 84, 90, 120, 148, 167));
+        assertThat(framesPlayerTwo, contains(16, 25, 44, 53, 82, 101, 110, 124, 132, 151));
+        assertThat(framesPlayerOne, contains(20, 39, 48, 66, 74, 84, 90, 120, 148, 167));
     }
 }

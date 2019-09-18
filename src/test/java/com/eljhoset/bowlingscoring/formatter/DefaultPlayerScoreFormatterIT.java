@@ -92,9 +92,9 @@ public class DefaultPlayerScoreFormatterIT {
 
     @Test
     public void format_validList_returnFormattedScore() throws Exception {
-	String scorePlayerOneFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/player_one_score_regular.txt")))
+	String scorePlayerOneFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/player_two_score_regular.txt")))
 		.replaceAll("\\r", "");
-	String scorePlayerTwoFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/player_two_score_regular.txt")))
+	String scorePlayerTwoFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/player_one_score_regular.txt")))
 		.replaceAll("\\r", "");
 	GameScore gameScore = formatter.format(regularGameTwoPlayerProcessed);
 	List<String> players = gameScore.getPlayers();
@@ -127,7 +127,6 @@ public class DefaultPlayerScoreFormatterIT {
     @Test
     public void format_allFouls_returnFormattedScore() throws Exception {
 	String scorePlayerOneFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/player_one_all_fouls.txt")))
-		
 		.replaceAll("\\r", "");
 	GameScore gameScore = formatter.format(allFoulsOnePlayerProcessed);
 	List<String> players = gameScore.getPlayers();
