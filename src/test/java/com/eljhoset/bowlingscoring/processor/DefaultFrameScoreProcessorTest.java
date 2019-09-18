@@ -1,10 +1,9 @@
 package com.eljhoset.bowlingscoring.processor;
 
-import com.eljhoset.bowlingscoring.parser.DefaultRollParser;
-import com.eljhoset.bowlingscoring.parser.mapper.DefaultPlayerFramelMapper;
+import com.eljhoset.bowlingscoring.parser.RollParser;
+import com.eljhoset.bowlingscoring.parser.factory.DefaultRollParserFactory;
+import com.eljhoset.bowlingscoring.parser.factory.RollParserType;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
-import com.eljhoset.bowlingscoring.parser.validator.DefaultPlayerFrameValidator;
-import com.eljhoset.bowlingscoring.parser.validator.DefaultRollLineValidator;
 import com.eljhoset.bowlingscoring.processor.model.FrameScore;
 import com.eljhoset.bowlingscoring.processor.model.FrameScoreList;
 import com.eljhoset.bowlingscoring.processor.model.PlayerScore;
@@ -43,10 +42,7 @@ public class DefaultFrameScoreProcessorTest {
         List<String> allFoulsOnePlayerLines = Files.readAllLines(Paths.get(FILE_PATH_ALL_FOULS));
         List<String> regularGameTwoPlayerLines = Files.readAllLines(Paths.get(FILE_PATH_REGULAR_GAME_TWO_PLAYERS));
 
-        DefaultRollParser parser = new DefaultRollParser();
-        parser.setPlayerFrameValidator(new DefaultPlayerFrameValidator());
-        parser.setRollMapper(new DefaultPlayerFramelMapper());
-        parser.setRollValidator(new DefaultRollLineValidator());
+        RollParser parser = DefaultRollParserFactory.instance().get(RollParserType.DEFAULT);
 
         this.regularGameOnePlayer = parser.parse(regularGameOnePlayerLines);
         this.allStrikesGameOnePlayer = parser.parse(allStrikesGameOnePlayerLines);
@@ -108,8 +104,8 @@ public class DefaultFrameScoreProcessorTest {
 
     @Test
     public void process_twoPlayerRegularGame_returnScore() {
-        List<Integer> integers = regularGameTwoPlayer.stream()
-                .map(processor::process)
+        List<Integer> integers = this.processor
+                .processAll(regularGameTwoPlayer).stream()
                 .map(PlayerScore::getScore)
                 .collect(Collectors.toList());
         assertThat(integers, contains(151, 167));
@@ -117,8 +113,9 @@ public class DefaultFrameScoreProcessorTest {
 
     @Test
     public void process_twoPlayerRegularGame_returnFrameScore() {
-        List<List<FrameScore>> collect = regularGameTwoPlayer.stream()
-                .map(processor::process)
+
+        List<List<FrameScore>> collect = this.processor
+                .processAll(regularGameTwoPlayer).stream()
                 .map(PlayerScore::getFrames)
                 .map(FrameScoreList::getFrames)
                 .collect(Collectors.toList());

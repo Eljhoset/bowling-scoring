@@ -78,7 +78,7 @@ public class DefaultFrameScoreProcessor implements FrameScoreProcessor {
                 .mapToInt(Roll::getValue)
                 .sum();
 
-        return new FrameScoreImpl(frameRolls.getRolls(), score);
+        return new FrameScoreImpl(frameRolls.getRolls(), score, frame.isSpare(), frame.isStrike(), frame.isLast());
     }
 
 }
