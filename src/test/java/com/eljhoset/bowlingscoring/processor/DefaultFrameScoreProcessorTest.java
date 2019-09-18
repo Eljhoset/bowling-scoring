@@ -5,6 +5,8 @@ import com.eljhoset.bowlingscoring.parser.mapper.DefaultPlayerFramelMapper;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.validator.DefaultPlayerFrameValidator;
 import com.eljhoset.bowlingscoring.parser.validator.DefaultRollLineValidator;
+import com.eljhoset.bowlingscoring.processor.model.FrameScore;
+import com.eljhoset.bowlingscoring.processor.model.FrameScoreList;
 import com.eljhoset.bowlingscoring.processor.model.PlayerScore;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,7 +23,7 @@ import org.junit.Test;
  *
  * @author jd-jd
  */
-public class DefaultFraeScoreProcessorTest {
+public class DefaultFrameScoreProcessorTest {
 
     private static final String FILE_PATH_REGULAR_GAME = "src/test/resources/regular_game.txt";
     private static final String FILE_PATH_REGULAR_GAME_TWO_PLAYERS = "src/test/resources/regular_game_two_players.txt";
@@ -73,10 +75,31 @@ public class DefaultFraeScoreProcessorTest {
     }
 
     @Test
+    public void process_onePlayerRegularGame_returnFrameScore() {
+        PlayerScore playerScore = this.processor.process(regularGameOnePlayer.get(0));
+        List<Integer> frames = playerScore.getFrames()
+                .getFrames()
+                .stream()
+                .map(FrameScore::getScore).collect(Collectors.toList());
+        assertThat(frames, contains(17, 30, 37, 57, 77, 105, 123, 131, 151, 170));
+    }
+
+    @Test
     public void process_onePlayerAllStrikes_returnScore() {
         PlayerScore playerScore = this.processor.process(allStrikesGameOnePlayer.get(0));
         assertThat(playerScore.getScore(), is(300));
     }
+
+    @Test
+    public void process_onePlayerAllStrikes_returnFrameScore() {
+        PlayerScore playerScore = this.processor.process(allStrikesGameOnePlayer.get(0));
+        List<Integer> frames = playerScore.getFrames()
+                .getFrames()
+                .stream()
+                .map(FrameScore::getScore).collect(Collectors.toList());
+        assertThat(frames, contains(30, 60, 90, 120, 150, 180, 210, 240, 270, 300));
+    }
+
     @Test
     public void process_onePlayerFouls_returnScore() {
         PlayerScore playerScore = this.processor.process(allFoulsOnePlayer.get(0));
@@ -90,5 +113,23 @@ public class DefaultFraeScoreProcessorTest {
                 .map(PlayerScore::getScore)
                 .collect(Collectors.toList());
         assertThat(integers, contains(151, 167));
+    }
+
+    @Test
+    public void process_twoPlayerRegularGame_returnFrameScore() {
+        List<List<FrameScore>> collect = regularGameTwoPlayer.stream()
+                .map(processor::process)
+                .map(PlayerScore::getFrames)
+                .map(FrameScoreList::getFrames)
+                .collect(Collectors.toList());
+        List<Integer> framesPlayerOne = collect.get(0).stream()
+                .map(FrameScore::getScore)
+                .collect(Collectors.toList());
+        List<Integer> framesPlayerTwo = collect.get(1).stream()
+                .map(FrameScore::getScore)
+                .collect(Collectors.toList());
+
+        assertThat(framesPlayerOne, contains(16, 25, 44, 53, 82, 101, 110, 124, 132, 151));
+        assertThat(framesPlayerTwo, contains(20, 39, 48, 66, 74, 84, 90, 120, 148, 167));
     }
 }
