@@ -2,9 +2,9 @@ package com.eljhoset.bowlingscoring.parser.mapper;
 
 import com.eljhoset.bowlingscoring.parser.model.Frame;
 import com.eljhoset.bowlingscoring.parser.model.FrameImpl;
+import com.eljhoset.bowlingscoring.parser.model.FrameListImpl;
 import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
 import com.eljhoset.bowlingscoring.parser.model.FrameRollsImpl;
-import com.eljhoset.bowlingscoring.parser.model.FrameListImpl;
 import com.eljhoset.bowlingscoring.parser.model.Player;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFramesImpl;
@@ -13,11 +13,11 @@ import static com.eljhoset.bowlingscoring.parser.model.REGEXS.VALUE_SEPARATOR;
 import com.eljhoset.bowlingscoring.parser.model.Roll;
 import com.eljhoset.bowlingscoring.parser.model.RollImpl;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class DefaultPlayerFramelMapper implements PlayerFramelMapper {
 
@@ -35,44 +35,40 @@ public class DefaultPlayerFramelMapper implements PlayerFramelMapper {
     }
 
     private PlayerFrames map(Map.Entry<String, List<String>> entry) {
+
+        Player player = new PlayerImpl(entry.getKey());
         List<Roll> allRolls = entry.getValue()
                 .stream()
                 .map(RollImpl::new)
                 .collect(Collectors.toList());
+        Iterator<Roll> rolls = allRolls.iterator();
 
-        Player player = new PlayerImpl(entry.getKey());
         List<Frame> frameList = new ArrayList<>(10);
-        int index = 0;
-        while (index < allRolls.size()) {
-            FrameRolls fr = getFrameRoll(index, frameList.size(), allRolls);
+        int frameNumber = 0;
 
-            final Frame frame = new FrameImpl(fr, frameList.size(), frameList.size() == 9);
+        while (rolls.hasNext()) {
+            final List<Roll> rollsOfFrame = new ArrayList<>(1);
+            Roll firstRoll = rolls.next();
+            rollsOfFrame.add(firstRoll);
 
+            //if roll is not a strike get the second one
+            if (10 - firstRoll.getValue() > 0 && rolls.hasNext()) {
+                rollsOfFrame.add(rolls.next());
+            }
+            frameNumber++;
+
+            //if is the las frame get the remaining rolls
+            boolean lastFrame = frameNumber == 10;
+            if (frameNumber == 10) {
+                while (rolls.hasNext()) {
+                    rollsOfFrame.add(rolls.next());
+                }
+            }
+            FrameRolls fr = new FrameRollsImpl(rollsOfFrame);
+            final Frame frame = new FrameImpl(fr, frameNumber, lastFrame);
             frameList.add(frame);
-            index += fr.getRollsNumber();
         }
         FrameListImpl frames = new FrameListImpl(frameList);
-
         return new PlayerFramesImpl(player, frames);
     }
-
-    private FrameRolls getFrameRoll(int index, int frameNumber, List<Roll> allRolls) {
-        final List<Roll> rolls = new ArrayList<>(1);
-        final Roll firstRoll = allRolls.get(index);
-        rolls.add(firstRoll);
-        int indexToFindSecondRoll = index + 1;
-        if (10 - firstRoll.getValue() > 0 && indexToFindSecondRoll < allRolls.size()) {
-            final Roll scondRoll = allRolls.get(indexToFindSecondRoll);
-            rolls.add(scondRoll);
-        }
-        //if is the last frame add the rest of the rolls
-        if (frameNumber == 9) {
-            int startIndex = index + (rolls.size() - 1);
-            int end = allRolls.size() - 1;
-            IntStream.range(startIndex, end)
-                    .forEach(i -> rolls.add(allRolls.get(i)));
-        }
-        return new FrameRollsImpl(rolls);
-    }
-
 }

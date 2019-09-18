@@ -12,4 +12,6 @@ public interface PlayerScore {
 
     FrameScoreList getFrames();
 
+    Integer getScore();
+
 }

@@ -5,10 +5,15 @@ import com.eljhoset.bowlingscoring.parser.mapper.DefaultPlayerFramelMapper;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.validator.DefaultPlayerFrameValidator;
 import com.eljhoset.bowlingscoring.parser.validator.DefaultRollLineValidator;
+import com.eljhoset.bowlingscoring.processor.model.PlayerScore;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 import org.junit.After;
+import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,9 +37,9 @@ public class DefaultFraeScoreProcessorTest {
     public void setup() throws Exception {
         this.processor = new DefaultFrameScoreProcessor();
         List<String> regularGameOnePlayerLines = Files.readAllLines(Paths.get(FILE_PATH_REGULAR_GAME));
-        List<String> allStrikesGameOnePlayerLines = Files.readAllLines(Paths.get(FILE_PATH_REGULAR_GAME_TWO_PLAYERS));
+        List<String> allStrikesGameOnePlayerLines = Files.readAllLines(Paths.get(FILE_PATH_ALL_STRIKE));
         List<String> allFoulsOnePlayerLines = Files.readAllLines(Paths.get(FILE_PATH_ALL_FOULS));
-        List<String> regularGameTwoPlayerLines = Files.readAllLines(Paths.get(FILE_PATH_ALL_STRIKE));
+        List<String> regularGameTwoPlayerLines = Files.readAllLines(Paths.get(FILE_PATH_REGULAR_GAME_TWO_PLAYERS));
 
         DefaultRollParser parser = new DefaultRollParser();
         parser.setPlayerFrameValidator(new DefaultPlayerFrameValidator());
@@ -59,5 +64,31 @@ public class DefaultFraeScoreProcessorTest {
     @Test(expected = NullPointerException.class)
     public void process_nullPathParam_throwException() throws Exception {
         this.processor.process(null);
+    }
+
+    @Test
+    public void process_onePlayerRegularGame_returnScore() {
+        PlayerScore playerScore = this.processor.process(regularGameOnePlayer.get(0));
+        assertThat(playerScore.getScore(), is(170));
+    }
+
+    @Test
+    public void process_onePlayerAllStrikes_returnScore() {
+        PlayerScore playerScore = this.processor.process(allStrikesGameOnePlayer.get(0));
+        assertThat(playerScore.getScore(), is(300));
+    }
+    @Test
+    public void process_onePlayerFouls_returnScore() {
+        PlayerScore playerScore = this.processor.process(allFoulsOnePlayer.get(0));
+        assertThat(playerScore.getScore(), is(0));
+    }
+
+    @Test
+    public void process_twoPlayerRegularGame_returnScore() {
+        List<Integer> integers = regularGameTwoPlayer.stream()
+                .map(processor::process)
+                .map(PlayerScore::getScore)
+                .collect(Collectors.toList());
+        assertThat(integers, contains(151, 167));
     }
 }

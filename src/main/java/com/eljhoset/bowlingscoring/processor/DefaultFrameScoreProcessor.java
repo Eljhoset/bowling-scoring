@@ -11,12 +11,13 @@ import com.eljhoset.bowlingscoring.processor.model.FrameScoreList;
 import com.eljhoset.bowlingscoring.processor.model.FrameScoreListImpl;
 import com.eljhoset.bowlingscoring.processor.model.PlayerScore;
 import com.eljhoset.bowlingscoring.processor.model.PlayerScoreImpl;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class DefaultFrameScoreProcessor implements FrameScoreProcessor {
 
@@ -27,43 +28,59 @@ public class DefaultFrameScoreProcessor implements FrameScoreProcessor {
         FrameList frameList = playerFrames.getFrames();
         List<Frame> frames = frameList.getFrames();
 
-        List<FrameScore> frameScores = frames.stream()
-                .map((e) -> {
-                    int currentIndex = frames.indexOf(e);
-                    int indexToFindNextFrame = currentIndex + 1;
-                    if (indexToFindNextFrame < frames.size()) {
-                        return mapFrameScore(e, Optional.of(frames.get(indexToFindNextFrame)));
-                    }
-                    return mapFrameScore(e, Optional.empty());
-                })
-                .collect(Collectors.toList());
+        List<FrameScore> frameScores = new ArrayList<>(10);
+
+        ListIterator<Frame> listIterator = frames.listIterator();
+        int score = 0;
+        while (listIterator.hasNext()) {
+            int nextIndex = listIterator.nextIndex();
+            final Frame frame = listIterator.next();
+            final FrameRolls frameRolls = frame.rolls();
+
+            Iterable<Frame> remainingFrameIterable = () -> frames.listIterator(nextIndex);
+            List<Roll> nextTwoRolls = StreamSupport.stream(remainingFrameIterable.spliterator(), false)
+                    .map(Frame::rolls)
+                    .map(FrameRolls::getRolls)
+                    .flatMap(List::stream)
+                    .skip(frameRolls.getRollsNumber())
+                    .limit(2)
+                    .collect(Collectors.toList());
+
+            final FrameScore frameScore = mapFrameScore(score, frame, nextTwoRolls);
+            score = frameScore.getScore();
+
+            frameScores.add(frameScore);
+
+        }
 
         FrameScoreList frameScoreList = new FrameScoreListImpl(frameScores);
-        PlayerScore playerScore = new PlayerScoreImpl(playerFrames.getPlayer(), frameScoreList);
+        PlayerScore playerScore = new PlayerScoreImpl(playerFrames.getPlayer(), frameScoreList, score);
         return playerScore;
     }
 
-    private FrameScore mapFrameScore(Frame frame, Optional<Frame> nextFrame) {
+    private FrameScore mapFrameScore(int previous, Frame frame, List<Roll> nextTwoRolls) {
         FrameRolls frameRolls = frame.rolls();
 
         Function<FrameRolls, Integer> sumPins = (rolls) -> {
             return rolls.getRolls().stream().mapToInt(Roll::getValue).sum();
         };
-        final AtomicInteger score = new AtomicInteger(sumPins.apply(frameRolls));
+        int score = sumPins.apply(frameRolls);
+        score += previous;
+
+        int rollBonusCount = 0;
         if (frame.isStrike()) {
-            nextFrame.map(Frame::rolls)
-                    .map(FrameRolls::getRolls)
-                    .ifPresent((f) -> {
-                        score.addAndGet(f.stream().mapToInt(Roll::getValue).sum());
-                    });
+            rollBonusCount = 2;
         }
         if (frame.isSpare()) {
-            score.addAndGet(nextFrame.map(Frame::rolls)
-                    .map(FrameRolls::getFirstRoll)
-                    .map(Roll::getValue).orElse(0));
-
+            rollBonusCount = 1;
         }
-        return new FrameScoreImpl(frameRolls.getRolls(), score.get());
+
+        score += nextTwoRolls.stream()
+                .limit(rollBonusCount)
+                .mapToInt(Roll::getValue)
+                .sum();
+
+        return new FrameScoreImpl(frameRolls.getRolls(), score);
     }
 
 }
