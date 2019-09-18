@@ -17,6 +17,10 @@ public class FrameRollsImpl implements FrameRolls {
         if (rolls.size() > 3) {
             throw new IllegalArgumentException(String.format("A frame cannot have more than three rolls, you have[%d]", rolls.size()));
         }
+        Roll firstRol = rolls.get(0);
+        if (firstRol.getValue() != 10 && rolls.size() < 2) {
+            throw new IllegalArgumentException("Second roll is required when first roll is not a strike");
+        }
         this.rolls = rolls;
     }
 

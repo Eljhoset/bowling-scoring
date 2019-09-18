@@ -2,7 +2,6 @@ package com.eljhoset.bowlingscoring.parser.validator;
 
 import com.eljhoset.bowlingscoring.parser.model.Frame;
 import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
-import com.eljhoset.bowlingscoring.parser.model.Frames;
 import com.eljhoset.bowlingscoring.parser.model.Player;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.model.Roll;
@@ -12,6 +11,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.eljhoset.bowlingscoring.parser.model.FrameList;
 
 /**
  *
@@ -119,7 +119,7 @@ public class DefaultPlayerFrameValidatorTest {
             }
 
             @Override
-            public Frames getFrames() {
+            public FrameList getFrames() {
                 return () -> Arrays.asList(frameWithBadRollNumber);
             }
 
@@ -131,7 +131,7 @@ public class DefaultPlayerFrameValidatorTest {
             }
 
             @Override
-            public Frames getFrames() {
+            public FrameList getFrames() {
                 return () -> Arrays.asList(frameWithBadNumberOfPins);
             }
 

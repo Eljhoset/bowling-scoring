@@ -1,13 +1,13 @@
 package com.eljhoset.bowlingscoring.parser.model;
 
+import java.util.List;
+
 /**
  *
  * @author jd-jd
  */
-public interface PlayerFrames {
+public interface FrameList {
 
-    Player getPlayer();
-
-    FrameList getFrames();
+    List<Frame> getFrames();
 
 }

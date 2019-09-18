@@ -22,6 +22,7 @@ public class FrameRollsImplTest {
     private List<Roll> twoRolls;
     private List<Roll> threeRolls;
     private List<Roll> fourRolls;
+    private List<Roll> incompleteRoll;
 
     @Before
     public void setup() {
@@ -34,7 +35,7 @@ public class FrameRollsImplTest {
 
             @Override
             public Integer getValue() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                return 10;
             }
         };
         Roll roll2 = new Roll() {
@@ -45,7 +46,7 @@ public class FrameRollsImplTest {
 
             @Override
             public Integer getValue() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                return 9;
             }
         };
         Roll roll3 = new Roll() {
@@ -56,7 +57,7 @@ public class FrameRollsImplTest {
 
             @Override
             public Integer getValue() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                return 7;
             }
         };
         Roll roll4 = new Roll() {
@@ -67,11 +68,12 @@ public class FrameRollsImplTest {
 
             @Override
             public Integer getValue() {
-                throw new UnsupportedOperationException("Not supported yet."); 
+                return 6;
             }
         };
 
         oneRoll = Arrays.asList(roll);
+        incompleteRoll = Arrays.asList(roll2);
         twoRolls = Arrays.asList(roll, roll2);
         threeRolls = Arrays.asList(roll, roll2, roll3);
         fourRolls = Arrays.asList(roll, roll2, roll3, roll4);
@@ -83,6 +85,7 @@ public class FrameRollsImplTest {
         twoRolls = null;
         threeRolls = null;
         fourRolls = null;
+        incompleteRoll = null;
     }
 
     @Test(expected = NullPointerException.class)
@@ -98,6 +101,10 @@ public class FrameRollsImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void instanciate_listWihtMoreThanThreeRolls_throwException() throws Exception {
         FrameRollsImpl rolls = new FrameRollsImpl(fourRolls);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void instanciate_incompleteFrame_throwException() throws Exception {
+        FrameRollsImpl rolls = new FrameRollsImpl(incompleteRoll);
     }
 
     @Test

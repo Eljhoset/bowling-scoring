@@ -61,26 +61,26 @@ public class FramesImplTest {
 
     @Test(expected = NullPointerException.class)
     public void instanciate_nullList_throwException() {
-        FramesImpl frames = new FramesImpl(null);
+        FrameListImpl frames = new FrameListImpl(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void instanciate_emptyList_throwException() {
-        FramesImpl frames = new FramesImpl(Collections.emptyList());
+        FrameListImpl frames = new FrameListImpl(Collections.emptyList());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void instanciate_listWihtMoreThanTenFrames_throwException() throws Exception {
-        FramesImpl frames = new FramesImpl(twentyFrames);
+        FrameListImpl frames = new FrameListImpl(twentyFrames);
     }
     @Test(expected = IllegalArgumentException.class)
     public void instanciate_listWihtLessThanTenFrames_throwException() throws Exception {
-        FramesImpl frames = new FramesImpl(Arrays.asList(frame));
+        FrameListImpl frames = new FrameListImpl(Arrays.asList(frame));
     }
 
     @Test
     public void instanciate_withValidList_instanciateObject() throws Exception {
-        FramesImpl frames = new FramesImpl(tenFrames);
+        FrameListImpl frames = new FrameListImpl(tenFrames);
         assertNotNull(frames);
     }
 }

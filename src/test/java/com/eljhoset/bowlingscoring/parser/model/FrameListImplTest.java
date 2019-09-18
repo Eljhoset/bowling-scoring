@@ -1,6 +1,7 @@
 package com.eljhoset.bowlingscoring.parser.model;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -12,7 +13,7 @@ import org.junit.Test;
  *
  * @author jd-jd
  */
-public class FrameImplTest {
+public class FrameListImplTest {
 
     private FrameRolls strikeFrame;
     private FrameRolls spareFrame;
@@ -64,6 +65,22 @@ public class FrameImplTest {
                     }
 
                 };
+            }
+
+            @Override
+            public Optional<Roll> getSecondRoll() {
+                return Optional.of(new Roll() {
+                    @Override
+                    public String getPins() {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+
+                    @Override
+                    public Integer getValue() {
+                        return 3;
+                    }
+
+                });
             }
 
             @Override
@@ -127,12 +144,14 @@ public class FrameImplTest {
         Frame frame = new FrameImpl(spareFrame, 1, false);
         assertTrue(frame.isSpare());
     }
+
     @Test
     public void isLast_nonLast_false() {
 
         Frame frame = new FrameImpl(spareFrame, 1, false);
         assertFalse(frame.isLast());
     }
+
     @Test
     public void isLast_last_true() {
 

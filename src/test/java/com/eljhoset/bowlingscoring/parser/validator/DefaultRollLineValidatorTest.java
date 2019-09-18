@@ -39,22 +39,26 @@ public class DefaultRollLineValidatorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void validate_moreThanTwoTabSeparatedValue_throwException() throws Exception {
-        this.validator.validate("Jeff   10  10");
+        this.validator.validate("Daniel\t10\t10");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void validate_negativeKnockedPins_throwException() throws Exception {
-        this.validator.validate("Jeff   -10");
+        this.validator.validate("Daniel\t-10");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void validate_greaterThan10KnockedPins_throwException() throws Exception {
-        this.validator.validate("Jeff   100");
+        this.validator.validate("Daniel\t100");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void validate_invalidCharacterKnockedPins_throwException() throws Exception {
-        this.validator.validate("Jeff   P");
+        this.validator.validate("Daniel\tP");
+    }
+    @Test
+    public void validate_validLine_returnLine() throws Exception {
+        String line = this.validator.validate("Daniel\t8");
     }
 
 }

@@ -1,7 +1,7 @@
 package com.eljhoset.bowlingscoring.processor;
 
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
-import com.eljhoset.bowlingscoring.processor.model.FrameScore;
+import com.eljhoset.bowlingscoring.processor.model.PlayerScore;
 
 /**
  *
@@ -9,5 +9,5 @@ import com.eljhoset.bowlingscoring.processor.model.FrameScore;
  */
 public interface FrameScoreProcessor {
 
-    FrameScore process(PlayerFrames frames);
+    PlayerScore process(PlayerFrames frames);
 }

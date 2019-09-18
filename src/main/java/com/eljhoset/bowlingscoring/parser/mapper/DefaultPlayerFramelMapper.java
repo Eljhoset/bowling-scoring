@@ -4,7 +4,7 @@ import com.eljhoset.bowlingscoring.parser.model.Frame;
 import com.eljhoset.bowlingscoring.parser.model.FrameImpl;
 import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
 import com.eljhoset.bowlingscoring.parser.model.FrameRollsImpl;
-import com.eljhoset.bowlingscoring.parser.model.FramesImpl;
+import com.eljhoset.bowlingscoring.parser.model.FrameListImpl;
 import com.eljhoset.bowlingscoring.parser.model.Player;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFramesImpl;
@@ -51,7 +51,7 @@ public class DefaultPlayerFramelMapper implements PlayerFramelMapper {
             frameList.add(frame);
             index += fr.getRollsNumber();
         }
-        FramesImpl frames = new FramesImpl(frameList);
+        FrameListImpl frames = new FrameListImpl(frameList);
 
         return new PlayerFramesImpl(player, frames);
     }

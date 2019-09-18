@@ -1,6 +1,7 @@
 package com.eljhoset.bowlingscoring.processor.model;
 
-import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
+import com.eljhoset.bowlingscoring.parser.model.Roll;
+import java.util.List;
 
 /**
  *
@@ -8,7 +9,8 @@ import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
  */
 public interface FrameScore {
 
-    PlayerFrames getFrame();
+    List<Roll> getRolls();
 
     int getScore();
+
 }

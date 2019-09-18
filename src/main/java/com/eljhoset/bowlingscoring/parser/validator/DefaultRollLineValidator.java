@@ -17,7 +17,7 @@ public class DefaultRollLineValidator implements RollLineValidator {
             throw new IllegalArgumentException(String.format("Invalid line [%s], should contain only the player name and the knocked pins separated by tab ", line));
         }
         String pins = parts[1];
-        if (pins.matches(PINS.get())) {
+        if (!pins.matches(PINS.get())) {
             String message = String.format("Invalid line [%s], invalid knocked pins [%s] values should only be positive numbers betwen 0 and 10 or F", line, pins);
             throw new IllegalArgumentException(message);
         }

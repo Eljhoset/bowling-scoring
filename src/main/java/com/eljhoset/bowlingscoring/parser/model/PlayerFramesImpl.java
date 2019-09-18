@@ -3,9 +3,9 @@ package com.eljhoset.bowlingscoring.parser.model;
 public class PlayerFramesImpl implements PlayerFrames {
 
     private final Player player;
-    private final Frames frames;
+    private final FrameList frames;
 
-    public PlayerFramesImpl(Player player, Frames frames) {
+    public PlayerFramesImpl(Player player, FrameList frames) {
         this.player = player;
         this.frames = frames;
     }
@@ -16,7 +16,7 @@ public class PlayerFramesImpl implements PlayerFrames {
     }
 
     @Override
-    public Frames getFrames() {
+    public FrameList getFrames() {
         return frames;
     }
 

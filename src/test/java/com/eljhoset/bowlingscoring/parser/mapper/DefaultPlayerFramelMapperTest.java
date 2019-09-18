@@ -1,7 +1,6 @@
 package com.eljhoset.bowlingscoring.parser.mapper;
 
 import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
-import com.eljhoset.bowlingscoring.parser.model.Frames;
 import com.eljhoset.bowlingscoring.parser.model.Player;
 import com.eljhoset.bowlingscoring.parser.model.PlayerFrames;
 import com.eljhoset.bowlingscoring.parser.model.Roll;
@@ -19,6 +18,7 @@ import org.junit.After;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+import com.eljhoset.bowlingscoring.parser.model.FrameList;
 
 /**
  *
@@ -92,7 +92,7 @@ public class DefaultPlayerFramelMapperTest {
     public void map_regularGameOnePlayer_returnCorrectFrameCount() {
         final List<PlayerFrames> framesList = this.mapper.map(regularGameOnePlayer);
         final PlayerFrames playerFrames = framesList.get(0);
-        final Frames frames = playerFrames.getFrames();
+        final FrameList frames = playerFrames.getFrames();
 
         assertThat(frames.getFrames().size(), is(10));
     }
@@ -112,7 +112,7 @@ public class DefaultPlayerFramelMapperTest {
     public void map_regularGameOnePlayer_returnCorrectRollNumbers() {
         final List<PlayerFrames> framesList = this.mapper.map(regularGameOnePlayer);
         final PlayerFrames playerFrames = framesList.get(0);
-        final Frames frames = playerFrames.getFrames();
+        final FrameList frames = playerFrames.getFrames();
         List<Roll> rools = frames.getFrames().stream()
                 .map(e -> e.rolls())
                 .map(FrameRolls::getRolls)
@@ -125,7 +125,7 @@ public class DefaultPlayerFramelMapperTest {
     @Test
     public void map_regularGameTwoPlayer_returnCorrectRollNumbers() {
         final List<PlayerFrames> framesList = this.mapper.map(regularGameTwoPlayer);
-        List<Frames> frames = framesList.stream().map(PlayerFrames::getFrames)
+        List<FrameList> frames = framesList.stream().map(PlayerFrames::getFrames)
                 .collect(Collectors.toList());
 
         Long rolls = frames.get(0).getFrames().stream()
@@ -147,7 +147,7 @@ public class DefaultPlayerFramelMapperTest {
     public void map_allStrikeGameOnePlayer_returnCorrectRollNumbers() {
         final List<PlayerFrames> framesList = this.mapper.map(allStrikesGameOnePlayer);
         final PlayerFrames playerFrames = framesList.get(0);
-        final Frames frames = playerFrames.getFrames();
+        final FrameList frames = playerFrames.getFrames();
         List<Roll> rools = frames.getFrames().stream()
                 .map(e -> e.rolls())
                 .map(FrameRolls::getRolls)
