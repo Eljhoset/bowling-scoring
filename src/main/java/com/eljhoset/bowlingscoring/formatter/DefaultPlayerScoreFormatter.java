@@ -32,7 +32,7 @@ public class DefaultPlayerScoreFormatter implements PlayerScoreFormatter {
 		.mapToObj(Integer::toString)
 		.collect(Collectors.joining("\t\t"));
 	sb.append(frames)
-		.append(System.getProperty("line.separator"));
+		.append("\n");
 	return sb.toString();
     }
 

@@ -77,7 +77,7 @@ public class DefaultPlayerScoreFormatterIT {
 
     @Test
     public void format_validList_returnFormattedHeader() throws Exception {
-	String headerFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/header.txt")));
+	String headerFormat = new String(Files.readAllBytes(Paths.get("src/test/resources/formatter/header.txt"))).replaceAll("\\r", "");
 	GameScore gameScore = formatter.format(regularGameOnePlayerProcessed);
 	String header = gameScore.getHeader();
 	assertTrue(header.equals(headerFormat));
