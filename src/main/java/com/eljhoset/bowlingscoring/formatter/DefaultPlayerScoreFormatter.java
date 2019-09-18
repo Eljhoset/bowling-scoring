@@ -60,7 +60,7 @@ public class DefaultPlayerScoreFormatter implements PlayerScoreFormatter {
 	if (frameScore.isStrike() && !frameScore.isLast()) {
 	    return "\tX";
 	}
-	if (frameScore.isSpare()) {
+	if (frameScore.isSpare() && !frameScore.isLast()) {
 	    return String.format("%s\t/", frameRolls.getFirstRoll().getPins());
 	}
 	if (frameScore.isLast()) {

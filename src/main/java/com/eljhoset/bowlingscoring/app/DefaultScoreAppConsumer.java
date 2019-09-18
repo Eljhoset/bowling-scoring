@@ -5,7 +5,7 @@ import com.eljhoset.bowlingscoring.formatter.model.GameScore;
 public class DefaultScoreAppConsumer implements ScoreAppConsumer {
 
     @Override
-    public void cosume(GameScore gameScore) {
+    public void consume(GameScore gameScore) {
 	StringBuilder sb = new StringBuilder(gameScore.getHeader());
 	for (String player : gameScore.getPlayers()) {
 	    sb.append(player);

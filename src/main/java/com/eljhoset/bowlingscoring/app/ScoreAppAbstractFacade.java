@@ -28,7 +28,7 @@ public abstract class ScoreAppAbstractFacade implements AppFacadeEvents {
 	List<PlayerFrames> dataParsed = parceData(data, parser);
 	List<PlayerScore> dataProcessed = process(dataParsed, processor);
 	GameScore dataFormatted = format(dataProcessed, formatter);
-	consumer.cosume(dataFormatted);
+	consumer.consume(dataFormatted);
     }
 
     private GameScore format(List<PlayerScore> dataProcessed, PlayerScoreFormatter formatter) {

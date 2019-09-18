@@ -8,5 +8,5 @@ import com.eljhoset.bowlingscoring.formatter.model.GameScore;
  */
 public interface ScoreAppConsumer {
 
-    void cosume(GameScore gameScore);
+    void consume(GameScore gameScore);
 }

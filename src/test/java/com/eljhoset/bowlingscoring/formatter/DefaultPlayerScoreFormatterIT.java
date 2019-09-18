@@ -50,19 +50,19 @@ public class DefaultPlayerScoreFormatterIT {
 
 	RollParser parser = DefaultRollParserFactory.instance().get(RollParserType.DEFAULT);
 
-	List<PlayerFrames> regularGameOnePlayerParced = parser.parse(regularGameOnePlayerLines);
-	List<PlayerFrames> allStrikesGameOnePlayerParced = parser.parse(allStrikesGameOnePlayerLines);
-	List<PlayerFrames> allFoulsOnePlayerParced = parser.parse(allFoulsOnePlayerLines);
-	List<PlayerFrames> allZerosOnePlayerParced = parser.parse(allZerosOnePlayerLines);
-	List<PlayerFrames> regularGameTwoPlayerParced = parser.parse(regularGameTwoPlayerLines);
+	List<PlayerFrames> regularGameOnePlayerParsed = parser.parse(regularGameOnePlayerLines);
+	List<PlayerFrames> allStrikesGameOnePlayerParsed = parser.parse(allStrikesGameOnePlayerLines);
+	List<PlayerFrames> allFoulsOnePlayerParsed = parser.parse(allFoulsOnePlayerLines);
+	List<PlayerFrames> allZerosOnePlayerParsed = parser.parse(allZerosOnePlayerLines);
+	List<PlayerFrames> regularGameTwoPlayerPasced = parser.parse(regularGameTwoPlayerLines);
 
 	FrameScoreProcessor processor = new DefaultFrameScoreProcessor();
 
-	this.regularGameOnePlayerProcessed = processor.processAll(regularGameOnePlayerParced);
-	this.allStrikesGameOnePlayerProcessed = processor.processAll(allStrikesGameOnePlayerParced);
-	this.allFoulsOnePlayerProcessed = processor.processAll(allFoulsOnePlayerParced);
-	this.allZerosOnePlayerProcessed = processor.processAll(allZerosOnePlayerParced);
-	this.regularGameTwoPlayerProcessed = processor.processAll(regularGameTwoPlayerParced);
+	this.regularGameOnePlayerProcessed = processor.processAll(regularGameOnePlayerParsed);
+	this.allStrikesGameOnePlayerProcessed = processor.processAll(allStrikesGameOnePlayerParsed);
+	this.allFoulsOnePlayerProcessed = processor.processAll(allFoulsOnePlayerParsed);
+	this.allZerosOnePlayerProcessed = processor.processAll(allZerosOnePlayerParsed);
+	this.regularGameTwoPlayerProcessed = processor.processAll(regularGameTwoPlayerPasced);
 	this.formatter = new DefaultPlayerScoreFormatter();
     }
 
