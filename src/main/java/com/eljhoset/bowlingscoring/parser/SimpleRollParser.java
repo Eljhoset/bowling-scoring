@@ -17,27 +17,27 @@ public abstract class SimpleRollParser implements RollParser {
 
     @Override
     public List<PlayerFrames> parse(List<String> rolls) {
-	Objects.requireNonNull(rolls, "rolls must not be null");
-	if (rolls.isEmpty()) {
-	    throw new IllegalArgumentException("There must be at least one roll");
-	}
-	Objects.requireNonNull(rolls, "rolls must not be null");
-	Objects.requireNonNull(getRollValidator(), "roll validator must not be null");
-	Objects.requireNonNull(getPlayerFrameValidator(), "plaver frmae validatormust not be null");
-	Objects.requireNonNull(getRollMapper(), "roll mapper must not be null");
+        Objects.requireNonNull(rolls, "rolls must not be null");
+        if (rolls.isEmpty()) {
+            throw new IllegalArgumentException("There must be at least one roll");
+        }
+        Objects.requireNonNull(rolls, "rolls must not be null");
+        Objects.requireNonNull(getRollValidator(), "roll validator must not be null");
+        Objects.requireNonNull(getPlayerFrameValidator(), "plaver frmae validatormust not be null");
+        Objects.requireNonNull(getRollMapper(), "roll mapper must not be null");
 
-	List<String> validRolls = rolls.stream()
-		.map(getRollValidator()::validate)
-		.collect(Collectors.toList());
+        List<String> validRolls = rolls.stream()
+                .map(getRollValidator()::validate)
+                .collect(Collectors.toList());
 
-	return getRollMapper().map(validRolls)
-		.stream().map(getPlayerFrameValidator()::validate)
-		.sorted((o1, o2) -> {
-		    Player player = o1.getPlayer();
-		    Player player2 = o2.getPlayer();
-		    return player.getName().compareTo(player2.getName());
-		})
-		.collect(Collectors.toList());
+        return getRollMapper().map(validRolls)
+                .stream().map(getPlayerFrameValidator()::validate)
+                .sorted((o1, o2) -> {
+                    Player player = o1.getPlayer();
+                    Player player2 = o2.getPlayer();
+                    return player.getName().compareTo(player2.getName());
+                })
+                .collect(Collectors.toList());
 
     }
 

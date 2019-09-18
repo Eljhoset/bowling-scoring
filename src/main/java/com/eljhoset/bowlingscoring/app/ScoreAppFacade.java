@@ -24,64 +24,64 @@ public class ScoreAppFacade extends ScoreAppAbstractFacade {
 
     @Override
     protected FileRollRepository getRepository() {
-	return new DefaultFileRollRepository();
+        return new DefaultFileRollRepository();
     }
 
     @Override
     protected RollParser getParser() {
-	return DefaultRollParserFactory.instance().get(RollParserType.DEFAULT);
+        return DefaultRollParserFactory.instance().get(RollParserType.DEFAULT);
     }
 
     @Override
     protected FrameScoreProcessor getProcessor() {
-	return new DefaultFrameScoreProcessor();
+        return new DefaultFrameScoreProcessor();
     }
 
     @Override
     protected PlayerScoreFormatter getFormatter() {
-	return new DefaultPlayerScoreFormatter();
+        return new DefaultPlayerScoreFormatter();
     }
 
     @Override
     public void onAfterFormat(List<PlayerScore> dataProcessed, GameScore dataFormatted) {
-	LOG.finer("scores formated");
+        LOG.finer("scores formated");
     }
 
     @Override
     public void onBeforeFormat(List<PlayerScore> dataProcessed) {
-	LOG.finer("formating scores");
+        LOG.finer("formating scores");
     }
 
     @Override
     public void onAfterProcess(List<PlayerFrames> dataParsed, List<PlayerScore> dataProcessed) {
-	LOG.finer("playes scores processed");
+        LOG.finer("playes scores processed");
     }
 
     @Override
     public void onBeforeProcess(List<PlayerFrames> dataParsed) {
-	LOG.finer("processing playes scores");
+        LOG.finer("processing playes scores");
     }
 
     @Override
     public void onAfterParse(List<String> data, List<PlayerFrames> dataParsed) {
-	String players = dataParsed.stream().map(PlayerFrames::getPlayer).map(Player::getName)
-		.collect(Collectors.joining(", "));
-	LOG.log(Level.FINER, () -> String.format("%d lines parsed into [%s] scores", data.size(), players));
+        String players = dataParsed.stream().map(PlayerFrames::getPlayer).map(Player::getName)
+                .collect(Collectors.joining(", "));
+        LOG.log(Level.FINER, () -> String.format("%d lines parsed into [%s] scores", data.size(), players));
     }
 
     @Override
     public void onBeforeParse(List<String> data) {
-	LOG.log(Level.FINER, () -> String.format("parsing %d lines", data.size()));
+        LOG.log(Level.FINER, () -> String.format("parsing %d lines", data.size()));
     }
 
     @Override
     public void onAfterDataIsLoaded(String filePath, List<String> data) {
-	LOG.log(Level.FINER, () -> String.format("%d lines loaded from file[%s]", data.size(), filePath));
+        LOG.log(Level.FINER, () -> String.format("%d lines loaded from file[%s]", data.size(), filePath));
     }
 
     @Override
     public void onBeforeDataIsLoaded(String filePath) {
-	LOG.log(Level.FINER, () -> String.format("loading file[%s]", filePath));
+        LOG.log(Level.FINER, () -> String.format("loading file[%s]", filePath));
     }
 
 }

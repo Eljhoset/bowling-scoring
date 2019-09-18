@@ -12,42 +12,42 @@ public class FrameScoreImpl implements FrameScore {
     private final Integer number;
 
     public FrameScoreImpl(Integer number, FrameRolls rolls, Integer score, boolean spare, boolean strike, boolean last) {
-	this.rolls = rolls;
-	this.number = number;
-	this.score = score;
-	this.spare = spare;
-	this.strike = strike;
-	this.last = last;
+        this.rolls = rolls;
+        this.number = number;
+        this.score = score;
+        this.spare = spare;
+        this.strike = strike;
+        this.last = last;
     }
 
     @Override
     public int getScore() {
-	return score;
+        return score;
     }
 
     @Override
     public boolean isSpare() {
-	return spare;
+        return spare;
     }
 
     @Override
     public boolean isStrike() {
-	return strike;
+        return strike;
     }
 
     @Override
     public boolean isLast() {
-	return last;
+        return last;
     }
 
     @Override
     public Integer getNumber() {
-	return number;
+        return number;
     }
 
     @Override
     public FrameRolls rolls() {
-	return rolls;
+        return rolls;
     }
 
 }

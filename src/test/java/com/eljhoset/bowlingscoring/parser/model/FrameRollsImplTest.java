@@ -102,6 +102,7 @@ public class FrameRollsImplTest {
     public void instanciate_listWihtMoreThanThreeRolls_throwException() throws Exception {
         FrameRollsImpl rolls = new FrameRollsImpl(fourRolls);
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void instanciate_incompleteFrame_throwException() throws Exception {
         FrameRollsImpl rolls = new FrameRollsImpl(incompleteRoll);

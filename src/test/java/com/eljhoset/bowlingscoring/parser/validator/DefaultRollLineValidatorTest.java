@@ -56,6 +56,7 @@ public class DefaultRollLineValidatorTest {
     public void validate_invalidCharacterKnockedPins_throwException() throws Exception {
         this.validator.validate("Daniel\tP");
     }
+
     @Test
     public void validate_validLine_returnLine() throws Exception {
         String line = this.validator.validate("Daniel\t8");

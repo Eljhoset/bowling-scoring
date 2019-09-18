@@ -15,20 +15,20 @@ public class ScoreAppFacadeIT {
 
     @Before
     public void setup() {
-	this.facade = new ScoreAppFacade();
+        this.facade = new ScoreAppFacade();
     }
 
     @After
     public void tearDown() {
-	this.facade = null;
+        this.facade = null;
     }
 
     @Test
     public void getScore_validPath_callConsumer() throws Exception {
 
-	facade.getScore("src/test/resources/regular_game_two_players.txt", (gameScore) -> {
-	    assertNotNull(gameScore);
-	});
+        facade.getScore("src/test/resources/regular_game_two_players.txt", (gameScore) -> {
+            assertNotNull(gameScore);
+        });
 
     }
 

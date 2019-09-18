@@ -54,9 +54,9 @@ public class FramesImplTest {
 
     @After
     public void tearDown() {
-        tenFrames=null;
-        twentyFrames=null;
-        frame=null;
+        tenFrames = null;
+        twentyFrames = null;
+        frame = null;
     }
 
     @Test(expected = NullPointerException.class)
@@ -73,6 +73,7 @@ public class FramesImplTest {
     public void instanciate_listWihtMoreThanTenFrames_throwException() throws Exception {
         FrameListImpl frames = new FrameListImpl(twentyFrames);
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void instanciate_listWihtLessThanTenFrames_throwException() throws Exception {
         FrameListImpl frames = new FrameListImpl(Arrays.asList(frame));

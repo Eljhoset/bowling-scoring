@@ -18,22 +18,22 @@ public class App {
     private static final Logger LOG = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-	if (args.length == 0) {
-	    LOG.log(Level.SEVERE, "Please provide a file path with the game results");
-	    System.exit(0);
-	}
+        if (args.length == 0) {
+            LOG.log(Level.SEVERE, "Please provide a file path with the game results");
+            System.exit(0);
+        }
 
-	final String filePath = args[0];
-	ScoreAppAbstractFacade facade = new ScoreAppFacade();
-	ScoreAppConsumer appConsumer = new DefaultScoreAppConsumer();
-	try {
-	    facade.getScore(filePath, appConsumer);
-	} catch (IOException | EmptyFileException ex) {
-	    LOG.log(Level.SEVERE, String.format("Error reading source file: %s", ex.getMessage()));
-	} catch (IllegalArgumentException ex) {
-	    LOG.log(Level.SEVERE, String.format("Iternal error %s", ex.getMessage()));
-	}
-	System.exit(0);
+        final String filePath = args[0];
+        ScoreAppAbstractFacade facade = new ScoreAppFacade();
+        ScoreAppConsumer appConsumer = new DefaultScoreAppConsumer();
+        try {
+            facade.getScore(filePath, appConsumer);
+        } catch (IOException | EmptyFileException ex) {
+            LOG.log(Level.SEVERE, String.format("Error reading source file: %s", ex.getMessage()));
+        } catch (IllegalArgumentException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+        }
+        System.exit(0);
 
     }
 }

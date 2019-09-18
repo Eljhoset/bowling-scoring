@@ -275,6 +275,7 @@ public class DefaultPlayerFrameValidatorTest {
     public void validate_firstFrameThreeRolls_throwException() throws Exception {
         this.validator.validate(playerFramesWithBadRollNumber);
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void validate_firstFrameTenRolls_throwException() throws Exception {
         this.validator.validate(playerFramesFrameWithMoreThan3Rolls);
