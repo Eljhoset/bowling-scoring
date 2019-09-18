@@ -82,7 +82,7 @@ public class DefaultPlayerScoreFormatter implements PlayerScoreFormatter {
 	    if (frameScore.isStrike()) {
 		return "X";
 	    }
-	    return String.format("\t%d", roll.getValue());
+	    return roll.getPins();
 	};
 	Function<Optional<Roll>, String> mapScondRoll = roll -> {
 	    String secondRollPins = roll.map(Roll::getPins).orElse("");
