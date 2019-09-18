@@ -2,6 +2,7 @@ package com.eljhoset.bowlingscoring.formatter;
 
 import com.eljhoset.bowlingscoring.formatter.model.GameScore;
 import com.eljhoset.bowlingscoring.formatter.model.GameScoreImpl;
+import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
 import com.eljhoset.bowlingscoring.parser.model.Player;
 import com.eljhoset.bowlingscoring.parser.model.Roll;
 import com.eljhoset.bowlingscoring.processor.model.FrameScore;
@@ -39,9 +40,9 @@ public class DefaultPlayerScoreFormatter implements PlayerScoreFormatter {
 	final Player player = playerScore.getPlayer();
 	final FrameScoreList frameScoreList = playerScore.getFrames();
 	List<FrameScore> frames = frameScoreList.getFrames();
-	StringBuilder sb = new StringBuilder(String.format("%s\n", player.getName()));
+	StringBuilder sb = new StringBuilder(player.getName());
+	sb.append("\n");
 	sb.append("Pinfalls\t");
-
 	String rolls = frames.stream().map(this::mapFrameRolls).collect(Collectors.joining("\t"));
 	String score = frames.stream().map(FrameScore::getScore).map(Object::toString).collect(Collectors.joining("\t\t"));
 	sb.append(rolls)
@@ -54,25 +55,28 @@ public class DefaultPlayerScoreFormatter implements PlayerScoreFormatter {
     }
 
     private String mapFrameRolls(FrameScore frameScore) {
+	FrameRolls frameRolls = frameScore.rolls();
+
 	if (frameScore.isStrike() && !frameScore.isLast()) {
 	    return "\tX";
 	}
 	if (frameScore.isSpare()) {
-	    return String.format("%s\t/", frameScore.getFirstRoll().getPins());
+	    return String.format("%s\t/", frameRolls.getFirstRoll().getPins());
 	}
 	if (frameScore.isLast()) {
 	    return mapLastFrame(frameScore);
 	}
 
-	String secondRoll = frameScore.getSecondRoll().map(Roll::getPins).orElse("");
-	return String.format("%s\t%s", frameScore.getFirstRoll().getPins(), secondRoll);
+	String secondRoll = frameRolls.getSecondRoll().map(Roll::getPins).orElse("");
+	return String.format("%s\t%s", frameRolls.getFirstRoll().getPins(), secondRoll);
     }
 
     private String mapLastFrame(FrameScore frameScore) {
+	FrameRolls frameRolls = frameScore.rolls();
 	final StringBuilder sb = new StringBuilder(1);
-	final Roll firstRoll = frameScore.getFirstRoll();
-	final Optional<Roll> secondRoll = frameScore.getSecondRoll();
-	final Optional<Roll> thirdRoll = frameScore.getThirdRoll();
+	final Roll firstRoll = frameRolls.getFirstRoll();
+	final Optional<Roll> secondRoll = frameRolls.getSecondRoll();
+	final Optional<Roll> thirdRoll = frameRolls.getThirdRoll();
 
 	Function<Roll, String> mapFirstRoll = roll -> {
 	    if (frameScore.isStrike()) {

@@ -13,7 +13,7 @@ import java.util.Objects;
 public class DefaultRollParserFactory implements RollParserFactory {
 
     public static RollParserFactory instance() {
-        return new DefaultRollParserFactory();
+	return new DefaultRollParserFactory();
     }
 
     private DefaultRollParserFactory() {
@@ -21,29 +21,27 @@ public class DefaultRollParserFactory implements RollParserFactory {
 
     @Override
     public RollParser get(RollParserType parserType) {
-        Objects.requireNonNull(parserType, "parserType must no be null");
-        switch (parserType) {
-            case DEFAULT:
-                DefaultRollParser parser = new DefaultRollParser();
-                parser.setPlayerFrameValidator(getFrameValidator());
-                parser.setRollMapper(getRollMapper());
-                parser.setRollValidator(getRollLineValidator());
-                return parser;
-            default:
-                throw new IllegalArgumentException(String.format("unknown parserType [%s]", parserType.DEFAULT));
-        }
+	Objects.requireNonNull(parserType, "parserType must no be null");
+	if (parserType.equals(RollParserType.DEFAULT)) {
+	    DefaultRollParser parser = new DefaultRollParser();
+	    parser.setPlayerFrameValidator(getFrameValidator());
+	    parser.setRollMapper(getRollMapper());
+	    parser.setRollValidator(getRollLineValidator());
+	    return parser;
+	}
+	throw new IllegalArgumentException(String.format("unknown parserType [%s]", parserType));
     }
 
     protected PlayerFrameValidator getFrameValidator() {
-        return new DefaultPlayerFrameValidator();
+	return new DefaultPlayerFrameValidator();
     }
 
     protected PlayerFramelMapper getRollMapper() {
-        return new DefaultPlayerFramelMapper();
+	return new DefaultPlayerFramelMapper();
     }
 
     protected RollLineValidator getRollLineValidator() {
-        return new DefaultRollLineValidator();
+	return new DefaultRollLineValidator();
     }
 
 }

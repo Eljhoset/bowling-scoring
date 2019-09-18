@@ -1,71 +1,53 @@
 package com.eljhoset.bowlingscoring.processor.model;
 
-import com.eljhoset.bowlingscoring.parser.model.Roll;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import com.eljhoset.bowlingscoring.parser.model.FrameRolls;
 
 public class FrameScoreImpl implements FrameScore {
 
-    private final List<Roll> rolls;
+    private final FrameRolls rolls;
     private final Integer score;
     private final boolean spare;
     private final boolean strike;
     private final boolean last;
+    private final Integer number;
 
-    public FrameScoreImpl(List<Roll> rolls, Integer score, boolean spare, boolean strike, boolean last) {
-        this.rolls = rolls;
-        this.score = score;
-        this.spare = spare;
-        this.strike = strike;
-        this.last = last;
-    }
-
-    @Override
-    public List<Roll> getRolls() {
-        return Collections.unmodifiableList(rolls);
+    public FrameScoreImpl(Integer number, FrameRolls rolls, Integer score, boolean spare, boolean strike, boolean last) {
+	this.rolls = rolls;
+	this.number = number;
+	this.score = score;
+	this.spare = spare;
+	this.strike = strike;
+	this.last = last;
     }
 
     @Override
     public int getScore() {
-        return score;
+	return score;
     }
 
     @Override
     public boolean isSpare() {
-        return spare;
+	return spare;
     }
 
     @Override
     public boolean isStrike() {
-        return strike;
+	return strike;
     }
 
     @Override
     public boolean isLast() {
-        return last;
+	return last;
     }
 
     @Override
-    public Optional<Roll> getSecondRoll() {
-        return getElementByIndex(1);
+    public Integer getNumber() {
+	return number;
     }
 
     @Override
-    public Optional<Roll> getThirdRoll() {
-        return getElementByIndex(2);
-    }
-
-    private Optional<Roll> getElementByIndex(int index) {
-        if (index < rolls.size()) {
-            return Optional.of(rolls.get(index));
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Roll getFirstRoll() {
-        return rolls.get(0);
+    public FrameRolls rolls() {
+	return rolls;
     }
 
 }
