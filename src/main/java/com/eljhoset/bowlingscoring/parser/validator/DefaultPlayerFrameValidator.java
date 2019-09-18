@@ -24,7 +24,10 @@ public class DefaultPlayerFrameValidator implements PlayerFrameValidator {
         if (sum > 10 && !frame.isLast()) {
             throw new IllegalArgumentException(String.format("Invalid number of knocked pins[%d] on frame[%d]", sum, frame.getNumber()));
         }
-        if (frame.rolls().getRollsNumber() > 2 && !frame.isLast() && !frame.isStrike()) {
+        if (frame.rolls().getRollsNumber() == 3 && !frame.isLast() && !frame.isStrike()) {
+            throw new IllegalArgumentException(String.format("Invalid number of rolls[%d] on frame[%d]", frame.rolls().getRollsNumber(), frame.getNumber()));
+        }
+        if (frame.rolls().getRollsNumber() > 3) {
             throw new IllegalArgumentException(String.format("Invalid number of rolls[%d] on frame[%d]", frame.rolls().getRollsNumber(), frame.getNumber()));
         }
         return frame;

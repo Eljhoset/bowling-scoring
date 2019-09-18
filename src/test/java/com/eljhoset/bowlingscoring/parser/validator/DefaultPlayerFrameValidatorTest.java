@@ -24,6 +24,7 @@ public class DefaultPlayerFrameValidatorTest {
     private PlayerFrames playerFramesWithBadRollNumber;
     private PlayerFrames playerFramesWithBadPinNumberKnocked;
     private PlayerFrames playerFramesValid;
+    private PlayerFrames playerFramesFrameWithMoreThan3Rolls;
 
     @Before
     public void setup() {
@@ -70,7 +71,7 @@ public class DefaultPlayerFrameValidatorTest {
             }
 
         };
-        Frame frameValid = new Frame() {
+        Frame frameWithBadRollNumber2 = new Frame() {
             @Override
             public Integer getNumber() {
                 return 0;
@@ -87,6 +88,49 @@ public class DefaultPlayerFrameValidatorTest {
                     @Override
                     public Integer getRollsNumber() {
                         return 10;
+                    }
+
+                    @Override
+                    public Roll getFirstRoll() {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                };
+            }
+
+            @Override
+            public boolean isSpare() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean isStrike() {
+                return false;
+            }
+
+            @Override
+            public boolean isLast() {
+                return false;
+            }
+
+        };
+        Frame frameValid = new Frame() {
+            @Override
+            public Integer getNumber() {
+                return 0;
+            }
+
+            @Override
+            public FrameRolls rolls() {
+                return new FrameRolls() {
+                    @Override
+                    public List<Roll> getRolls() {
+                        return Collections.emptyList();
+                    }
+
+                    @Override
+                    public Integer getRollsNumber() {
+                        return 3;
                     }
 
                     @Override
@@ -198,6 +242,18 @@ public class DefaultPlayerFrameValidatorTest {
             }
 
         };
+        this.playerFramesFrameWithMoreThan3Rolls = new PlayerFrames() {
+            @Override
+            public Player getPlayer() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public FrameList getFrames() {
+                return () -> Arrays.asList(frameWithBadRollNumber2);
+            }
+
+        };
         this.validator = new DefaultPlayerFrameValidator();
     }
 
@@ -206,6 +262,8 @@ public class DefaultPlayerFrameValidatorTest {
         this.validator = null;
         this.playerFramesWithBadRollNumber = null;
         this.playerFramesWithBadPinNumberKnocked = null;
+        this.playerFramesValid = null;
+        this.playerFramesFrameWithMoreThan3Rolls = null;
     }
 
     @Test(expected = NullPointerException.class)
@@ -216,6 +274,10 @@ public class DefaultPlayerFrameValidatorTest {
     @Test(expected = IllegalArgumentException.class)
     public void validate_firstFrameThreeRolls_throwException() throws Exception {
         this.validator.validate(playerFramesWithBadRollNumber);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void validate_firstFrameTenRolls_throwException() throws Exception {
+        this.validator.validate(playerFramesFrameWithMoreThan3Rolls);
     }
 
     @Test(expected = IllegalArgumentException.class)
